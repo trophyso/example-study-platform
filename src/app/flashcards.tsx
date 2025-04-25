@@ -1,9 +1,9 @@
-import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "@/components/ui/carousel";
-import { Card, CardContent } from "@/components/ui/card";
-import { Flashcard } from "@/types/flashcard";
+import { Carousel, CarouselContent, CarouselPrevious, CarouselNext } from "@/components/ui/carousel";
+import { IFlashcard } from "@/types/flashcard";
+import Flashcard from "./flashcard";
 
 interface Props {
-    flashcards: Flashcard[];
+    flashcards: IFlashcard[];
 }
 
 export default function Flashcards({ flashcards }: Props) {
@@ -11,17 +11,7 @@ export default function Flashcards({ flashcards }: Props) {
         <Carousel className="w-full max-w-md">
             <CarouselContent>
                 {flashcards.map((flashcard) => (
-                    <CarouselItem key={flashcard.id}>
-                        <div className="p-1">
-                            <Card>
-                                <CardContent className="flex items-center justify-center p-6">
-                                    <span className="text-4xl text-center font-semibold">
-                                        {flashcard.front}
-                                    </span>
-                                </CardContent>
-                            </Card>
-                        </div>
-                    </CarouselItem>
+                    <Flashcard key={flashcard.id} flashcard={flashcard} />
                 ))}
             </CarouselContent>
             <CarouselPrevious />

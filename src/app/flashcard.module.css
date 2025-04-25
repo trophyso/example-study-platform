@@ -1,0 +1,14 @@
+.backface-hidden {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.card {
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+}
+
+.flipped_text {
+  transform: scaleX(-1);
+  transform-origin: center;
+}
