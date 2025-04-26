@@ -5,6 +5,7 @@ import { IFlashcard } from "@/types/flashcard";
 import Flashcard from "./flashcard";
 import { useEffect, useState } from "react";
 import { Progress } from "@/components/ui/progress";
+import { viewFlashcard } from "./actions";
 
 interface Props {
     flashcards: IFlashcard[];
@@ -22,9 +23,12 @@ export default function Flashcards({ flashcards }: Props) {
         // Initialize the flash index
         setFlashIndex(api.selectedScrollSnap() + 1);
 
-        // Update the flash index when the carousel is scrolled
         api.on("select", () => {
+            // Update the flash index when the carousel is scrolled
             setFlashIndex(api.selectedScrollSnap() + 1);
+
+            // Track the flashcard viewed event
+            viewFlashcard();
         });
     }, [api]);
 
