@@ -6,6 +6,7 @@ import Flashcard from "./flashcard";
 import { useEffect, useState } from "react";
 import { Progress } from "@/components/ui/progress";
 import { viewFlashcard } from "./actions";
+import { toast } from "@/lib/toast";
 
 interface Props {
     flashcards: IFlashcard[];
@@ -23,12 +24,42 @@ export default function Flashcards({ flashcards }: Props) {
         // Initialize the flash index
         setFlashIndex(api.selectedScrollSnap() + 1);
 
-        api.on("select", () => {
-            // Update the flash index when the carousel is scrolled
+        api.on("select", async () => {
+            // Update flashIndex when the carousel is scrolled
             setFlashIndex(api.selectedScrollSnap() + 1);
 
             // Track the flashcard viewed event
-            viewFlashcard();
+            const response = await viewFlashcard();
+
+            if (!response) {
+                return;
+            }
+
+            // Show toast if the user has unlocked any new achievements
+            if (response.achievements?.length) {
+                response.achievements.forEach((metricAchievements) => {
+                    if (metricAchievements.completed?.length) {
+                        metricAchievements.completed.forEach((achievement) => {
+                            toast({
+                                title: achievement.name as string,
+                                description: `Congratulations! You've viewed ${achievement.metricValue} flashcards!`,
+                                image: {
+                                    src: achievement.badgeUrl as string,
+                                    alt: achievement.name as string,
+                                }
+                            });
+                        });
+                    }
+                });
+            }
+
+            // Show toast if user has extended their streak
+            if (response.currentStreak?.extended) {
+                toast({
+                    title: "You're on a roll!",
+                    description: `Keep going to keep your ${response.currentStreak.length} day streak!`,
+                });
+            }
         });
     }, [api]);
 
