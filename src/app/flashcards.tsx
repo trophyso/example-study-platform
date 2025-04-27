@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { Progress } from "@/components/ui/progress";
 import { viewFlashcard } from "./actions";
 import { toast } from "@/lib/toast";
+import useSound from 'use-sound';
 
 interface Props {
     flashcards: IFlashcard[];
@@ -15,6 +16,8 @@ interface Props {
 export default function Flashcards({ flashcards }: Props) {
     const [flashIndex, setFlashIndex] = useState(0);
     const [api, setApi] = useState<CarouselApi>();
+    const [playAchievementUnlocked] = useSound('/sounds/achievement_unlocked.mp3');
+    const [playStreakExtended] = useSound('/sounds/streak_extended.mp3');
 
     useEffect(() => {
         if (!api) {
@@ -35,8 +38,12 @@ export default function Flashcards({ flashcards }: Props) {
                 return;
             }
 
-            // Show toast if the user has unlocked any new achievements
             if (response.achievements?.length) {
+                console.log('playing achievement unlocked sound');
+                // Play sound once if the user has unlocked any new achievements
+                playAchievementUnlocked();
+
+                // Show toasts if the user has unlocked any new achievements
                 response.achievements.forEach((metricAchievements) => {
                     if (metricAchievements.completed?.length) {
                         metricAchievements.completed.forEach((achievement) => {
@@ -53,8 +60,12 @@ export default function Flashcards({ flashcards }: Props) {
                 });
             }
 
-            // Show toast if user has extended their streak
             if (response.currentStreak?.extended) {
+                console.log('playing streak extended sound');
+                // Play sound once if the user has extended their streak
+                playStreakExtended();
+
+                // Show toast if the user has extended their streak
                 toast({
                     title: "You're on a roll!",
                     description: `Keep going to keep your ${response.currentStreak.length} day streak!`,
