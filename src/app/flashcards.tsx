@@ -3,11 +3,10 @@
 import { Carousel, CarouselContent, CarouselPrevious, CarouselNext, type CarouselApi } from "@/components/ui/carousel";
 import { IFlashcard } from "@/types/flashcard";
 import Flashcard from "./flashcard";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Progress } from "@/components/ui/progress";
 import { viewFlashcard } from "./actions";
 import { toast } from "@/lib/toast";
-import useSound from 'use-sound';
 
 interface Props {
     flashcards: IFlashcard[];
@@ -16,8 +15,10 @@ interface Props {
 export default function Flashcards({ flashcards }: Props) {
     const [flashIndex, setFlashIndex] = useState(0);
     const [api, setApi] = useState<CarouselApi>();
-    const [playAchievementUnlocked] = useSound('/sounds/achievement_unlocked.mp3');
-    const [playStreakExtended] = useSound('/sounds/streak_extended.mp3');
+    const achievementSound = useRef(
+        new Audio('/sounds/achievement_unlocked.mp3')
+    );
+    const streakSound = useRef(new Audio('/sounds/streak_extended.mp3'));
 
     useEffect(() => {
         if (!api) {
@@ -39,9 +40,9 @@ export default function Flashcards({ flashcards }: Props) {
             }
 
             if (response.achievements?.length) {
-                console.log('playing achievement unlocked sound');
-                // Play sound once if the user has unlocked any new achievements
-                playAchievementUnlocked();
+                // Play the achievement sound only once for all new achievements
+                achievementSound.current.currentTime = 0;
+                achievementSound.current.play();
 
                 // Show toasts if the user has unlocked any new achievements
                 response.achievements.forEach((metricAchievements) => {
@@ -61,9 +62,9 @@ export default function Flashcards({ flashcards }: Props) {
             }
 
             if (response.currentStreak?.extended) {
-                console.log('playing streak extended sound');
-                // Play sound once if the user has extended their streak
-                playStreakExtended();
+                // Play the streak sound
+                streakSound.current.currentTime = 0;
+                streakSound.current.play();
 
                 // Show toast if the user has extended their streak
                 toast({
