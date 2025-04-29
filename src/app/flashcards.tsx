@@ -15,10 +15,13 @@ interface Props {
 export default function Flashcards({ flashcards }: Props) {
     const [flashIndex, setFlashIndex] = useState(0);
     const [api, setApi] = useState<CarouselApi>();
-    const achievementSound = useRef(
-        new Audio('/sounds/achievement_unlocked.mp3')
-    );
-    const streakSound = useRef(new Audio('/sounds/streak_extended.mp3'));
+    const achievementSound = useRef<HTMLAudioElement | null>(null);
+    const streakSound = useRef<HTMLAudioElement | null>(null);
+
+    useEffect(() => {
+        achievementSound.current = new Audio('/sounds/achievement_unlocked.mp3');
+        streakSound.current = new Audio('/sounds/streak_extended.mp3');
+    }, []);
 
     useEffect(() => {
         if (!api) {
@@ -41,8 +44,10 @@ export default function Flashcards({ flashcards }: Props) {
 
             if (response.achievements?.length) {
                 // Play the achievement sound only once for all new achievements
-                achievementSound.current.currentTime = 0;
-                achievementSound.current.play();
+                if (achievementSound.current) {
+                    achievementSound.current.currentTime = 0;
+                    achievementSound.current.play();
+                }
 
                 // Show toasts if the user has unlocked any new achievements
                 response.achievements.forEach((metricAchievements) => {
@@ -63,8 +68,10 @@ export default function Flashcards({ flashcards }: Props) {
 
             if (response.currentStreak?.extended) {
                 // Play the streak sound
-                streakSound.current.currentTime = 0;
-                streakSound.current.play();
+                if (streakSound.current) {
+                    streakSound.current.currentTime = 0;
+                    streakSound.current.play();
+                }
 
                 // Show toast if the user has extended their streak
                 toast({
