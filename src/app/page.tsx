@@ -3,6 +3,7 @@ import Flashcards from "./flashcards";
 import { Toaster } from "@/components/ui/sonner"
 import Userbox from "./userbox";
 import { getProgress } from "./actions";
+
 export default async function Home() {
   const progress = await getProgress();
 
