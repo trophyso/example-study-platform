@@ -1,36 +1,118 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<a id="readme-top"></a>
+
+<br />
+
+<div align="center">
+  <a href="https://github.com/trophyso/example-study-platform">
+    <img src="assets/logo_dark.svg" alt="Trophy" width="250" height="50">
+  </a>
+
+<h3 align="center">Example Study Platform</h3>
+  <p align="center">
+    An example flashcard study platform with gamification features supported by Trophy.
+    <br />
+    <a href="https://docs.trophy.so/guides/tutorials/how-to-build-a-gamified-study-platform">
+        <strong>Tutorial »</strong>
+    </a>
+    <a href="http://trophy.so?utm_source=github&utm_medium=example-apps&utm_campaign=example-study-app">
+        <strong>Trophy »</strong>
+    </a>
+    <br />
+    <br />
+    <a href="https://github.com/trophyso/example-study-platform">View Demo</a>
+    &middot;
+    <a href="https://github.com/trophyso/example-study-platform/issues/new?labels=bug&template=bug-report---.md">Report Bug</a>
+    &middot;
+    <a href="https://github.com/trophyso/example-study-platform/issues/new?labels=enhancement&template=feature-request---.md">Request Feature</a>
+  </p>
+</div>
+
+<!-- ABOUT THE PROJECT -->
+
+## About The Project
+
+<div align="center">
+  <video width="75%" autoplay loop muted playsinline style="border-radius: 12px;">
+    <source src="assets/demo.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+</div>
+
+<br />
+
+This is an example flashcard study platform that demostrates how to build the following gamification features in an educational setting with Trophy:
+
+- Multi-stage achievements with badges
+- Daily streaks
+- Automated gamified emails for achievement unlocked, and for weekly progress summaries
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+### Built With
+
+- NextJS 15 (React 19)
+- [shadcn/ui](https://ui.shadcn.com)
+- [Lucide](https://lucide.dev/icons) for iconography
+- [Motion](https://motion.dev/) for animations
+- [HTML5 Audio API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API) for sound effects
+- [Trophy](http://trophy.so?utm_source=github&utm_medium=example-apps&utm_campaign=example-study-app) for gamification
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+<!-- GETTING STARTED -->
 
 ## Getting Started
 
-First, run the development server:
+First:
+
+```bash
+npm install
+```
+
+Then:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Prerequisites
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+To use the gamification features, you'll need to create a Trophy account. Follow the [tutorial](https://docs.trophy.so/guides/tutorials/how-to-build-a-gamified-study-platform) to get started or [create an account](http://app.trophy.so/sign-up?utm_source=github&utm_medium=example-apps&utm_campaign=example-study-app)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-## Learn More
+<!-- CONTRIBUTING -->
 
-To learn more about Next.js, take a look at the following resources:
+## Contributing
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
 
-## Deploy on Vercel
+Don't forget to give the project a star! Thanks again!
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+<!-- LICENSE -->
+
+## License
+
+See `LICENSE` for more information.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+<!-- CONTACT -->
+
+## Contact
+
+Trophy - hello@trophy.so
+
+Project Link: [https://github.com/trophyso/example-study-platform](https://github.com/trophyso/example-study-platform)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
