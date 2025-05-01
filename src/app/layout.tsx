@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Example Study Platform",
+  title: "Example Study Platform | Powered by Trophy",
   description: "A simple flashcard study platform with gamification features powered by Trophy",
 };
 
