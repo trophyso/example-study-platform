@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Example Study Platform",
-  description: "A simple flashcard study platform with gamification features supported by Trophy",
+  description: "A simple flashcard study platform with gamification features powered by Trophy",
 };
 
 export default function RootLayout({

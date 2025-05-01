@@ -9,7 +9,7 @@
 
 <h3 align="center">Example Study Platform</h3>
   <p align="center">
-    An example flashcard study platform with gamification features supported by Trophy.
+    An example flashcard study platform with gamification features powered by Trophy.
     <br />
     <a href="https://docs.trophy.so/guides/tutorials/how-to-build-a-gamified-study-platform">
         <strong>Tutorial »</strong>
