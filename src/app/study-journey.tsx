@@ -77,7 +77,7 @@ export default function StudyJourney({ achievements, streak }: Props) {
                                 ))}
                             </div>
                             <div className="grid grid-cols-7 gap-1">
-                                {streak?.streakHistory?.map((day, i) => (
+                                {(streak?.streakHistory || Array(14).fill(0)).map((day, i) => (
                                     <div
                                         key={i}
                                         className={`h-10 w-10 rounded-lg ${day.length > 0 ? 'bg-primary' : 'bg-primary/10'
