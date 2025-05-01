@@ -10,8 +10,7 @@ interface Props {
     streak: StreakResponse | null;
 }
 
-export default function Userbox({ achievements, streak }: Props) {
-    console.log(streak)
+export default function StudyJourney({ achievements, streak }: Props) {
     return (
         <div className="absolute top-10 right-10 z-50">
             <Dialog>
