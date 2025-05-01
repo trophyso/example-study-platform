@@ -1,6 +1,6 @@
-import { Flashcard } from "./types/flashcard";
+import { IFlashcard } from "./types/flashcard";
 
-export const flashcards: Flashcard[] = [
+export const flashcards: IFlashcard[] = [
     {
         id: "1",
         front: "What is the capital of France?",
