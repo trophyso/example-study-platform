@@ -80,10 +80,10 @@ export default function StudyJourney({ achievements, streak }: Props) {
                                 {streak?.streakHistory?.map((day, i) => (
                                     <div
                                         key={i}
-                                        className={`h-10 w-10 rounded-lg ${day.length > 0 ? 'bg-primary' : 'bg-primary/20'
+                                        className={`h-10 w-10 rounded-lg ${day.length > 0 ? 'bg-primary' : 'bg-primary/10'
                                             } flex items-center justify-center`}
                                     >
-                                        <Flame className={`h-6 w-6 ${day.length > 0 ? 'text-white' : 'text-primary'
+                                        <Flame className={`h-6 w-6 ${day.length > 0 ? 'text-white' : 'text-primary/30'
                                             }`} />
                                     </div>
                                 ))}
