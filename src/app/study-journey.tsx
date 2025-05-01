@@ -13,7 +13,7 @@ export default function StudyJourney() {
     const [achievements, setAchievements] = useState<MultiStageAchievementResponse[] | null>(null);
     const [streak, setStreak] = useState<StreakResponse | null>(null);
     const [open, setOpen] = useState(false);
-    const [_, setLoading] = useState(false);
+    const [, setLoading] = useState(false);
 
     useEffect(() => {
         if (!open) {
