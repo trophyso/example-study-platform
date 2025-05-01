@@ -3,7 +3,6 @@
 import { TrophyApiClient } from '@trophyso/node';
 import { EventResponse, MultiStageAchievementResponse, StreakResponse } from '@trophyso/node/api';
 
-const USER_ID = "39";
 const FLASHCARDS_VIEWED_METRIC_KEY = "flashcards-viewed";
 
 // Set up Trophy SDK with API key
@@ -15,21 +14,12 @@ const trophy = new TrophyApiClient({
  * Track a flashcard viewed event in Trophy
  * @returns The event response from Trophy
  */
-export async function viewFlashcard(): Promise<EventResponse | null> {
+export async function viewFlashcard(userId: string): Promise<EventResponse | null> {
     try {
         return await trophy.metrics.event(FLASHCARDS_VIEWED_METRIC_KEY, {
             user: {
-                // Mock email
-                email: "user@example.com",
-
-                // Mock timezone
-                tz: "Europe/London",
-
-                // Mock user ID
-                id: USER_ID
+                id: userId
             },
-
-            // Event represents a single user viewing 1 flashcard
             value: 1
         });
     } catch (error) {
@@ -42,9 +32,9 @@ export async function viewFlashcard(): Promise<EventResponse | null> {
  * Get the achievements for a user
  * @returns The achievements for the user
  */
-export async function getAchievements(): Promise<MultiStageAchievementResponse[] | null> {
+export async function getAchievements(userId: string): Promise<MultiStageAchievementResponse[] | null> {
     try {
-        return await trophy.users.allachievements(USER_ID);
+        return await trophy.users.allachievements(userId);
     } catch (error) {
         console.error(error);
         return null;
@@ -55,9 +45,9 @@ export async function getAchievements(): Promise<MultiStageAchievementResponse[]
  * Get the streak for a user
  * @returns The streak for the user
  */
-export async function getStreak(): Promise<StreakResponse | null> {
+export async function getStreak(userId: string): Promise<StreakResponse | null> {
     try {
-        return await trophy.users.streak(USER_ID, {
+        return await trophy.users.streak(userId, {
             historyPeriods: 14
         });
     } catch (error) {

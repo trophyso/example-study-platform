@@ -1,16 +1,14 @@
+'use client';
+
 import { flashcards } from "@/data";
 import Flashcards from "./flashcards";
 import { Toaster } from "@/components/ui/sonner"
 import StudyJourney from "./study-journey";
-import { getAchievements, getStreak } from "./actions";
 
-export default async function Home() {
-  const achievements = await getAchievements();
-  const streak = await getStreak();
-
+export default function Home() {
   return (
     <div className="flex flex-col items-center justify-center h-screen relative">
-      <StudyJourney achievements={achievements} streak={streak} />
+      <StudyJourney />
       <Flashcards flashcards={flashcards} />
       <Toaster />
     </div>

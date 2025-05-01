@@ -4,16 +4,41 @@ import { Flame, GraduationCap } from "lucide-react";
 import Image from "next/image";
 import dayjs from 'dayjs';
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { getAchievements } from "./actions";
+import { useEffect, useState } from "react";
+import { getStreak } from "./actions";
+import { getUserId } from "@/lib/user";
 
-interface Props {
-    achievements: MultiStageAchievementResponse[] | null;
-    streak: StreakResponse | null;
-}
+export default function StudyJourney() {
+    const [achievements, setAchievements] = useState<MultiStageAchievementResponse[] | null>(null);
+    const [streak, setStreak] = useState<StreakResponse | null>(null);
+    const [open, setOpen] = useState(false);
+    const [_, setLoading] = useState(false);
 
-export default function StudyJourney({ achievements, streak }: Props) {
+    useEffect(() => {
+        if (!open) {
+            return;
+        }
+
+        const fetchData = async () => {
+            const userId = getUserId();
+
+            setLoading(true);
+
+            const achievements = await getAchievements(userId);
+            const streak = await getStreak(userId);
+
+            setAchievements(achievements);
+            setStreak(streak);
+
+            setLoading(false);
+        };
+        fetchData();
+    }, [open]);
+
     return (
         <div className="absolute top-10 right-10 z-50 cursor-pointer">
-            <Dialog>
+            <Dialog open={open} onOpenChange={setOpen}>
                 <DialogTrigger>
                     <div className="h-12 w-12 cursor-pointer duration-100 border-1 border-gray-300 shadow-sm transition-all rounded-full relative hover:bg-gray-100">
                         <GraduationCap className="h-6 w-6 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-gray-800" />

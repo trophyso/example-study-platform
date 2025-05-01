@@ -7,6 +7,7 @@ import { useEffect, useState, useRef } from "react";
 import { Progress } from "@/components/ui/progress";
 import { viewFlashcard } from "./actions";
 import { toast } from "@/lib/toast";
+import { getUserId } from "@/lib/user";
 
 interface Props {
     flashcards: IFlashcard[];
@@ -36,7 +37,8 @@ export default function Flashcards({ flashcards }: Props) {
             setFlashIndex(api.selectedScrollSnap() + 1);
 
             // Track the flashcard viewed event
-            const response = await viewFlashcard();
+            const userId = getUserId();
+            const response = await viewFlashcard(userId);
 
             if (!response) {
                 return;
