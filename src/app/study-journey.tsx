@@ -11,6 +11,13 @@ interface Props {
 }
 
 export default function StudyJourney({ achievements, streak }: Props) {
+    const sundayOffset = 7 - (new Date().getDay() + 6) % 7;
+
+    const adjustedStreakHistory = streak?.streakHistory?.slice(
+        sundayOffset - 1,
+        streak.streakHistory.length
+    ) || Array(14).fill(null);
+
     return (
         <div className="absolute top-10 right-10 z-50 cursor-pointer">
             <Dialog>
@@ -77,16 +84,29 @@ export default function StudyJourney({ achievements, streak }: Props) {
                                 ))}
                             </div>
                             <div className="grid grid-cols-7 gap-1">
-                                {(streak?.streakHistory || Array(14).fill(0)).map((day, i) => (
-                                    <div
-                                        key={i}
-                                        className={`h-10 w-10 rounded-lg ${day.length > 0 ? 'bg-primary' : 'bg-primary/10'
-                                            } flex items-center justify-center`}
-                                    >
-                                        <Flame className={`h-6 w-6 ${day.length > 0 ? 'text-white' : 'text-primary/30'
-                                            }`} />
-                                    </div>
-                                ))}
+                                {adjustedStreakHistory.map((day, i) => {
+                                    if (day === null) {
+                                        return (
+                                            <div
+                                                key={i}
+                                                className="h-10 w-10 rounded-lg bg-white border border-gray-200 flex items-center justify-center"
+                                            >
+                                                <Flame className="h-6 w-6 text-gray-200" />
+                                            </div>
+                                        );
+                                    }
+
+                                    return (
+                                        <div
+                                            key={i}
+                                            className={`h-10 w-10 rounded-lg ${day.length > 0 ? 'bg-primary' : 'bg-primary/10'
+                                                } flex items-center justify-center`}
+                                        >
+                                            <Flame className={`h-6 w-6 ${day.length > 0 ? 'text-white' : 'text-primary/30'
+                                                }`} />
+                                        </div>
+                                    );
+                                })}
                             </div>
                         </div>
                     </div>
