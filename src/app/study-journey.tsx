@@ -8,12 +8,18 @@ import { getAchievements } from "./actions";
 import { useEffect, useState } from "react";
 import { getStreak } from "./actions";
 import { getUserId } from "@/lib/user";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function StudyJourney() {
-    const [achievements, setAchievements] = useState<MultiStageAchievementResponse[] | null>(null);
-    const [streak, setStreak] = useState<StreakResponse | null>(null);
+    const [data, setData] = useState<{
+        achievements: MultiStageAchievementResponse[] | null;
+        streak: StreakResponse | null;
+    }>({
+        achievements: null,
+        streak: null
+    });
     const [open, setOpen] = useState(false);
-    const [, setLoading] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         if (!open) {
@@ -28,8 +34,10 @@ export default function StudyJourney() {
             const achievements = await getAchievements(userId);
             const streak = await getStreak(userId);
 
-            setAchievements(achievements);
-            setStreak(streak);
+            setData({
+                achievements,
+                streak
+            });
 
             setLoading(false);
         };
@@ -59,38 +67,48 @@ export default function StudyJourney() {
                     <div className="flex flex-col gap-2 items-center justify-between pt-2">
                         <div className="flex flex-col items-center gap-4">
                             <div className="relative h-24 w-24">
-                                <svg className="h-full w-full" viewBox="0 0 100 100">
-                                    <circle
-                                        className="stroke-primary/20"
-                                        strokeWidth="10"
-                                        fill="transparent"
-                                        r="45"
-                                        cx="50"
-                                        cy="50"
-                                    />
-                                    <circle
-                                        className="stroke-primary transition-all"
-                                        strokeWidth="10"
-                                        strokeLinecap="round"
-                                        fill="transparent"
-                                        r="45"
-                                        cx="50"
-                                        cy="50"
-                                        strokeDasharray={`${(streak?.length || 0) * 10} 1000`}
-                                        transform="rotate(-90 50 50)"
-                                    />
-                                </svg>
-                                <div className="absolute inset-0 flex items-center justify-center">
-                                    <span className="text-2xl font-bold text-primary">{streak?.length || 0}</span>
-                                </div>
+                                {loading ? (
+                                    <Skeleton className="w-[100px] h-[100px] rounded-full" />
+                                ) : (
+                                    <>
+                                        <svg className="h-full w-full" viewBox="0 0 100 100">
+                                            <circle
+                                                className="stroke-primary/20"
+                                                strokeWidth="10"
+                                                fill="transparent"
+                                                r="45"
+                                                cx="50"
+                                                cy="50"
+                                            />
+                                            <circle
+                                                className="stroke-primary transition-all"
+                                                strokeWidth="10"
+                                                strokeLinecap="round"
+                                                fill="transparent"
+                                                r="45"
+                                                cx="50"
+                                                cy="50"
+                                                strokeDasharray={`${(data.streak?.length || 0) * 10} 1000`}
+                                                transform="rotate(-90 50 50)"
+                                            />
+                                        </svg>
+                                        <div className="absolute inset-0 flex items-center justify-center">
+                                            <span className="text-2xl font-bold text-primary">{data.streak?.length || 0}</span>
+                                        </div>
+                                    </>
+                                )}
                             </div>
                             <div className="flex flex-col text-center">
                                 <h3 className="text-lg font-semibold">
-                                    {streak && streak.length > 0 ? `Your study streak` : `No study streak`}
+                                    {data.streak && data.streak.length > 0 ? `Your study streak` : `No study streak`}
                                 </h3>
-                                <p className="text-sm text-gray-500">
-                                    {streak && streak.length > 0 ? `${streak.length} day${streak.length > 1 ? 's' : ''} in a row` : `Start a streak`}
-                                </p>
+                                {loading ? (
+                                    <Skeleton className="h-3 mt-1 w-full" />
+                                ) : (
+                                    <p className="text-sm text-gray-500">
+                                        {data.streak && data.streak.length > 0 ? `${data.streak.length} day${data.streak.length > 1 ? 's' : ''} in a row` : `Start a streak`}
+                                    </p>
+                                )}
                             </div>
                         </div>
                         <div className="flex flex-col">
@@ -102,7 +120,14 @@ export default function StudyJourney() {
                                 ))}
                             </div>
                             <div className="grid grid-cols-7 gap-1">
-                                {(streak?.streakHistory || Array(14).fill(0)).map((day, i) => (
+                                {loading ? Array(14).fill(0).map((_, i) => (
+                                    <div
+                                        key={i}
+                                        className="h-10 w-10 rounded-lg flex items-center justify-center"
+                                    >
+                                        <Skeleton className="h-10 w-10" />
+                                    </div>
+                                )) : (data.streak?.streakHistory || Array(14).fill(0)).map((day, i) => (
                                     <div
                                         key={i}
                                         className={`h-10 w-10 rounded-lg ${day.length > 0 ? 'bg-primary' : 'bg-primary/10'
@@ -119,30 +144,42 @@ export default function StudyJourney() {
                     <Separator />
 
                     {/* Achievements */}
-                    {achievements && achievements.length > 0 ? (
-                        <div className="flex flex-col gap-3">
-                            <div>
-                                <p className="text-lg font-semibold">
-                                    Your badges
-                                </p>
-                            </div>
-                            <div className="grid grid-cols-3 gap-2 w-full">
-                                {achievements?.map((achievement) => (
-                                    <div key={achievement.id} className="p-2 rounded-md border border-gray-200 flex flex-col gap-1 items-center shadow-sm">
-                                        <Image
-                                            src={achievement.badgeUrl as string}
-                                            alt={achievement.name as string}
-                                            width={100}
-                                            height={100}
-                                            className="rounded-full border-gray-300"
-                                        />
-                                        <p className="font-semibold">{achievement.name}</p>
-                                        <p className="text-gray-500 text-sm">
-                                            {dayjs(achievement.achievedAt).format('MMM D, YYYY')}
-                                        </p>
+                    <div className="flex flex-col gap-3">
+                        <div>
+                            <p className="text-lg font-semibold">
+                                Your badges
+                            </p>
+                        </div>
+                    </div>
+                    {loading ? (
+                        <div className="grid grid-cols-3 gap-2 w-full">
+                            {Array(3).fill(0).map((_, idx) => (
+                                <div key={idx} className="p-3 rounded-md border border-gray-200 flex flex-col gap-3 items-center justify-between shadow-sm min-h-[130px]">
+                                    <Skeleton className="w-[75px] h-[75px] rounded-full" />
+                                    <div className="flex flex-col gap-1 w-full items-center justify-center">
+                                        <Skeleton className="h-3 w-full" />
+                                        <Skeleton className="h-2 w-1/2" />
                                     </div>
-                                ))}
-                            </div>
+                                </div>
+                            ))}
+                        </div>
+                    ) : data.achievements && data.achievements.length > 0 ? (
+                        <div className="grid grid-cols-3 gap-2 w-full">
+                            {data.achievements?.map((achievement) => (
+                                <div key={achievement.id} className="p-2 rounded-md border border-gray-200 flex flex-col gap-1 items-center shadow-sm">
+                                    <Image
+                                        src={achievement.badgeUrl as string}
+                                        alt={achievement.name as string}
+                                        width={100}
+                                        height={100}
+                                        className="rounded-full border-gray-300"
+                                    />
+                                    <p className="font-semibold">{achievement.name}</p>
+                                    <p className="text-gray-500 text-sm">
+                                        {dayjs(achievement.achievedAt).format('MMM D, YYYY')}
+                                    </p>
+                                </div>
+                            ))}
                         </div>
                     ) : (
                         <div className="flex flex-col gap-1 items-center justify-center min-h-[100px] p-3 w-full mt-3">
