@@ -3,6 +3,7 @@ import Flashcards from "./flashcards";
 import { Toaster } from "@/components/ui/sonner"
 import StudyJourney from "./study-journey";
 import { getAchievements, getStreak } from "./actions";
+import PoweredBy from "./powered-by";
 
 export default async function Home() {
   const achievements = await getAchievements();
@@ -13,6 +14,7 @@ export default async function Home() {
       <StudyJourney achievements={achievements} streak={streak} />
       <Flashcards flashcards={flashcards} />
       <Toaster />
+      <PoweredBy />
     </div>
   )
 }
