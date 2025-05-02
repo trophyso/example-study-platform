@@ -5,7 +5,7 @@ import Image from "next/image";
 import dayjs from 'dayjs';
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { getAchievements } from "./actions";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { getStreak } from "./actions";
 import { getUserId } from "@/lib/user";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -43,6 +43,15 @@ export default function StudyJourney() {
         };
         fetchData();
     }, [open]);
+
+    const adjustedStreakHistory = useMemo(() => {
+        const sundayOffset = 7 - (new Date().getDay() + 6) % 7;
+
+        return data.streak?.streakHistory?.slice(
+            sundayOffset - 1,
+            data.streak?.streakHistory?.length
+        ) || Array(14).fill(null);
+    }, [data.streak]);
 
     return (
         <div className="absolute top-10 right-10 z-50 cursor-pointer">
@@ -127,16 +136,29 @@ export default function StudyJourney() {
                                     >
                                         <Skeleton className="h-10 w-10" />
                                     </div>
-                                )) : (data.streak?.streakHistory || Array(14).fill(0)).map((day, i) => (
-                                    <div
-                                        key={i}
-                                        className={`h-10 w-10 rounded-lg ${day.length > 0 ? 'bg-primary' : 'bg-primary/10'
-                                            } flex items-center justify-center`}
-                                    >
-                                        <Flame className={`h-6 w-6 ${day.length > 0 ? 'text-white' : 'text-primary/30'
-                                            }`} />
-                                    </div>
-                                ))}
+                                )) : adjustedStreakHistory.map((day, i) => {
+                                    if (day === null) {
+                                        return (
+                                            <div
+                                                key={i}
+                                                className="h-10 w-10 rounded-lg bg-white border border-gray-200 flex items-center justify-center"
+                                            >
+                                                <Flame className="h-6 w-6 text-gray-200" />
+                                            </div>
+                                        );
+                                    }
+
+                                    return (
+                                        <div
+                                            key={i}
+                                            className={`h-10 w-10 rounded-lg ${day.length > 0 ? 'bg-primary' : 'bg-primary/10'
+                                                } flex items-center justify-center`}
+                                        >
+                                            <Flame className={`h-6 w-6 ${day.length > 0 ? 'text-white' : 'text-primary/30'
+                                                }`} />
+                                        </div>
+                                    );
+                                })}
                             </div>
                         </div>
                     </div>
