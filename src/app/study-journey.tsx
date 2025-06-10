@@ -1,5 +1,5 @@
 import { Separator } from "@/components/ui/separator";
-import { MultiStageAchievementResponse, StreakResponse } from "@trophyso/node/api";
+import { BaseAchievementResponse, StreakResponse } from "@trophyso/node/api";
 import { Flame, GraduationCap } from "lucide-react";
 import Image from "next/image";
 import dayjs from 'dayjs';
@@ -12,7 +12,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export default function StudyJourney() {
     const [data, setData] = useState<{
-        achievements: MultiStageAchievementResponse[] | null;
+        achievements: BaseAchievementResponse[] | null;
         streak: StreakResponse | null;
     }>({
         achievements: null,
