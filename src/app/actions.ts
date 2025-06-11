@@ -1,7 +1,7 @@
 'use server';
 
 import { TrophyApiClient } from '@trophyso/node';
-import { EventResponse, MultiStageAchievementResponse, StreakResponse } from '@trophyso/node/api';
+import { AchievementResponse, EventResponse, StreakResponse } from '@trophyso/node/api';
 
 const USER_ID = "39";
 const FLASHCARDS_VIEWED_METRIC_KEY = "flashcards-viewed";
@@ -42,9 +42,9 @@ export async function viewFlashcard(): Promise<EventResponse | null> {
  * Get the achievements for a user
  * @returns The achievements for the user
  */
-export async function getAchievements(): Promise<MultiStageAchievementResponse[] | null> {
+export async function getAchievements(): Promise<AchievementResponse[] | null> {
     try {
-        return await trophy.users.allachievements(USER_ID);
+        return await trophy.users.allAchievements(USER_ID);
     } catch (error) {
         console.error(error);
         return null;

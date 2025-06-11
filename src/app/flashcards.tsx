@@ -50,9 +50,9 @@ export default function Flashcards({ flashcards }: Props) {
                 }
 
                 // Show toasts if the user has unlocked any new achievements
-                response.achievements.forEach((metricAchievements) => {
-                    if (metricAchievements.completed?.length) {
-                        metricAchievements.completed.forEach((achievement) => {
+                response.achievements.forEach((achievement) => {
+                    switch (achievement.trigger) {
+                        case 'metric':
                             toast({
                                 title: achievement.name as string,
                                 description: `Congratulations! You've viewed ${achievement.metricValue} flashcards!`,
@@ -61,7 +61,17 @@ export default function Flashcards({ flashcards }: Props) {
                                     alt: achievement.name as string,
                                 }
                             });
-                        });
+                            break;
+                        case 'streak':
+                            toast({
+                                title: achievement.name as string,
+                                description: `Congratulations! You've unlocked the ${achievement.streakLength} day streak badge!`,
+                                image: {
+                                    src: achievement.badgeUrl as string,
+                                    alt: achievement.name as string,
+                                }
+                            });
+                            break;
                     }
                 });
             }
