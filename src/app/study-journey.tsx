@@ -1,12 +1,12 @@
 import { Separator } from "@/components/ui/separator";
-import { MultiStageAchievementResponse, StreakResponse } from "@trophyso/node/api";
+import { AchievementResponse, StreakResponse } from "@trophyso/node/api";
 import { Flame, GraduationCap } from "lucide-react";
 import Image from "next/image";
 import dayjs from 'dayjs';
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 
 interface Props {
-    achievements: MultiStageAchievementResponse[] | null;
+    achievements: AchievementResponse[] | null;
     streak: StreakResponse | null;
 }
 
