@@ -82,9 +82,8 @@ export default function StudyJourney({ achievements, streak }: Props) {
                 </h3>
                 <p className="text-sm text-gray-500">
                   {streak && streak.length > 0
-                    ? `${streak.length} day${
-                        streak.length > 1 ? "s" : ""
-                      } in a row`
+                    ? `${streak.length} day${streak.length > 1 ? "s" : ""
+                    } in a row`
                     : `Start a streak`}
                 </p>
               </div>
@@ -116,14 +115,12 @@ export default function StudyJourney({ achievements, streak }: Props) {
                   return (
                     <div
                       key={i}
-                      className={`h-10 w-10 rounded-lg ${
-                        day.length > 0 ? "bg-primary" : "bg-primary/10"
-                      } flex items-center justify-center`}
+                      className={`h-10 w-10 rounded-lg ${day.length > 0 ? "bg-primary" : "bg-primary/10"
+                        } flex items-center justify-center`}
                     >
                       <Flame
-                        className={`h-6 w-6 ${
-                          day.length > 0 ? "text-white" : "text-primary/30"
-                        }`}
+                        className={`h-6 w-6 ${day.length > 0 ? "text-white" : "text-primary/30"
+                          }`}
                       />
                     </div>
                   );
