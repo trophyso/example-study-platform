@@ -1,5 +1,5 @@
 import { Separator } from "@/components/ui/separator";
-import { AchievementResponse, StreakResponse } from "@trophyso/node/api";
+import { CompletedAchievementResponse, StreakResponse } from "@trophyso/node/api";
 import { Flame, GraduationCap } from "lucide-react";
 import Image from "next/image";
 import dayjs from "dayjs";
@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/dialog";
 
 interface Props {
-  achievements: AchievementResponse[] | null;
+  achievements: CompletedAchievementResponse[] | null;
   streak: StreakResponse | null;
 }
 
