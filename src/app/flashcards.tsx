@@ -55,7 +55,7 @@ export default function Flashcards({ flashcards }: Props) {
                         case 'metric':
                             toast({
                                 title: achievement.name as string,
-                                description: `Congratulations! You've viewed ${achievement.metricValue} flashcards!`,
+                                description: achievement.description,
                                 image: {
                                     src: achievement.badgeUrl as string,
                                     alt: achievement.name as string,
@@ -65,7 +65,7 @@ export default function Flashcards({ flashcards }: Props) {
                         case 'streak':
                             toast({
                                 title: achievement.name as string,
-                                description: `Congratulations! You've unlocked the ${achievement.streakLength} day streak badge!`,
+                                description: achievement.description,
                                 image: {
                                     src: achievement.badgeUrl as string,
                                     alt: achievement.name as string,

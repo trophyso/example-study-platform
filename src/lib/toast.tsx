@@ -7,7 +7,7 @@ import Image from 'next/image';
 interface ToastProps {
     id: string | number;
     title: string;
-    description: string;
+    description?: string;
     image?: {
         src: string;
         alt: string;
@@ -54,7 +54,11 @@ export function Toast(props: ToastProps) {
             <div className="flex flex-1 items-center">
                 <div className="w-full">
                     <p className="text-sm font-medium text-gray-900">{title}</p>
-                    <p className="mt-1 text-sm text-gray-500">{description}</p>
+                    {description && (
+                        <p className="mt-1 text-sm text-gray-500">
+                            {description}
+                        </p>
+                    )}
                 </div>
             </div>
         </div>
