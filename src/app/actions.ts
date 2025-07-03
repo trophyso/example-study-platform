@@ -1,7 +1,8 @@
 'use server';
 
 import { TrophyApiClient } from '@trophyso/node';
-import { EventResponse, StreakResponse, CompletedAchievementResponse, AchievementWithStatsResponse, GetUserPointsResponse } from '@trophyso/node/api';
+import { EventResponse, StreakResponse, CompletedAchievementResponse, AchievementWithStatsResponse, GetUserPointsResponse, UsersPointsEventSummaryResponseItem } from '@trophyso/node/api';
+import dayjs from 'dayjs';
 
 const FLASHCARDS_VIEWED_METRIC_KEY = "flashcards-viewed";
 
@@ -75,7 +76,28 @@ export async function getAllAchievements(): Promise<AchievementWithStatsResponse
  */
 export async function getUserPoints(userId: string): Promise<GetUserPointsResponse | null> {
     try {
-        return await trophy.users.points(userId);
+        return await trophy.users.points(userId, {
+            awards: 5
+        });
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+}
+
+/**
+ * Get the points summary for a user
+ * @returns The points summary for the user
+ */
+export async function getPointsSummary(userId: string): Promise<UsersPointsEventSummaryResponseItem[] | null> {
+    try {
+        const now = dayjs();
+
+        return await trophy.users.pointsEventSummary(userId, {
+            aggregation: "daily",
+            startDate: now.subtract(6, 'day').toISOString().split('T')[0],
+            endDate: now.toISOString().split('T')[0]
+        });
     } catch (error) {
         console.error(error);
         return null;

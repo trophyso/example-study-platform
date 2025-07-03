@@ -147,7 +147,7 @@ export default function DefaultStudyJourneyView({
                     <div className="flex flex-col gap-3">
                         <div className="flex items-center justify-between">
                             <div>
-                                <p className="text-lg font-semibold">
+                                <p className="font-semibold">
                                     Your badges
                                 </p>
                             </div>

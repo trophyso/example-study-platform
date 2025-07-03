@@ -7,6 +7,7 @@ import { getUserId } from '@/lib/user';
 
 interface UserPointsContextType {
     points: GetUserPointsResponse | null;
+    lastPoints: GetUserPointsResponse | null;
     loading: boolean;
     error: string | null;
     refetch: () => Promise<void>;
@@ -20,6 +21,8 @@ interface UserPointsProviderProps {
 
 export function UserPointsProvider({ children }: UserPointsProviderProps) {
     const [points, setPoints] = useState<GetUserPointsResponse | null>(null);
+    const [lastPoints, setLastPoints]
+        = useState<GetUserPointsResponse | null>(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
@@ -30,6 +33,7 @@ export function UserPointsProvider({ children }: UserPointsProviderProps) {
         setError(null);
 
         try {
+            setLastPoints(points);
             const pointsData = await getUserPoints(userId);
             setPoints(pointsData);
         } catch (err) {
@@ -49,6 +53,7 @@ export function UserPointsProvider({ children }: UserPointsProviderProps) {
 
     const value: UserPointsContextType = {
         points,
+        lastPoints,
         loading,
         error,
         refetch,
@@ -67,5 +72,6 @@ export function useUserPoints() {
     if (context === undefined) {
         throw new Error('useUserPoints must be used within a UserPointsProvider');
     }
+
     return context;
 } 
