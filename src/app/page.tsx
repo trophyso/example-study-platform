@@ -3,7 +3,7 @@
 import { flashcards } from "@/data";
 import Flashcards from "./flashcards";
 import { Toaster } from "@/components/ui/sonner"
-import StudyJourney from "./study-journey";
+import StudyJourney from "./study-journey/study-journey";
 import PoweredBy from "./powered-by";
 export default function Home() {
   return (

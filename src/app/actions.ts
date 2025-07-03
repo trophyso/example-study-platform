@@ -1,7 +1,7 @@
 'use server';
 
 import { TrophyApiClient } from '@trophyso/node';
-import { EventResponse, StreakResponse, CompletedAchievementResponse } from '@trophyso/node/api';
+import { EventResponse, StreakResponse, CompletedAchievementResponse, AchievementWithStatsResponse } from '@trophyso/node/api';
 
 const FLASHCARDS_VIEWED_METRIC_KEY = "flashcards-viewed";
 
@@ -50,6 +50,19 @@ export async function getStreak(userId: string): Promise<StreakResponse | null> 
         return await trophy.users.streak(userId, {
             historyPeriods: 14
         });
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+}
+
+/**
+ * Get all achievements that can be completed
+ * @returns All achievements
+ */
+export async function getAllAchievements(): Promise<AchievementWithStatsResponse[] | null> {
+    try {
+        return await trophy.achievements.all();
     } catch (error) {
         console.error(error);
         return null;
