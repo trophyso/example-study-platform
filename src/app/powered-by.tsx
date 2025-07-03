@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 export default function PoweredBy() {
     return (
         <HoverCard openDelay={0}>
-            <HoverCardTrigger>
+            <HoverCardTrigger asChild>
                 <div className="mt-5 flex items-center gap-2">
                     <p>Powered by</p>
                     <a href="https://trophy.so" target="_blank" className="inline-flex items-center gap-1 border border-gray-300 rounded-sm shadow-sm h-8 p-1">
