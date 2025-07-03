@@ -8,6 +8,7 @@ import { Progress } from "@/components/ui/progress";
 import { viewFlashcard } from "./actions";
 import { toast } from "@/lib/toast";
 import { getUserId } from "@/lib/user";
+import { useUserPoints } from "@/contexts/UserPointsContext";
 
 interface Props {
     flashcards: IFlashcard[];
@@ -18,6 +19,7 @@ export default function Flashcards({ flashcards }: Props) {
     const [api, setApi] = useState<CarouselApi>();
     const achievementSound = useRef<HTMLAudioElement | null>(null);
     const streakSound = useRef<HTMLAudioElement | null>(null);
+    const { refetch: refetchPoints } = useUserPoints();
 
     useEffect(() => {
         achievementSound.current = new Audio('/sounds/achievement_unlocked.mp3');
@@ -77,8 +79,11 @@ export default function Flashcards({ flashcards }: Props) {
                     description: `Keep going to keep your ${response.currentStreak.length} day streak!`,
                 });
             }
+
+            // Refresh points
+            refetchPoints();
         });
-    }, [api]);
+    }, [api, refetchPoints]);
 
     return (
         <div className="flex flex-col items-center justify-center gap-4 max-w-md">
