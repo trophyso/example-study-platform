@@ -51,28 +51,14 @@ export default function Flashcards({ flashcards }: Props) {
 
                 // Show toasts if the user has unlocked any new achievements
                 response.achievements.forEach((achievement) => {
-                    switch (achievement.trigger) {
-                        case 'metric':
-                            toast({
-                                title: achievement.name as string,
-                                description: achievement.description,
-                                image: {
-                                    src: achievement.badgeUrl as string,
-                                    alt: achievement.name as string,
-                                }
-                            });
-                            break;
-                        case 'streak':
-                            toast({
-                                title: achievement.name as string,
-                                description: achievement.description,
-                                image: {
-                                    src: achievement.badgeUrl as string,
-                                    alt: achievement.name as string,
-                                }
-                            });
-                            break;
-                    }
+                    toast({
+                        title: achievement.name as string,
+                        description: achievement.description,
+                        image: {
+                            src: achievement.badgeUrl as string,
+                            alt: achievement.name as string,
+                        }
+                    });
                 });
             }
 
