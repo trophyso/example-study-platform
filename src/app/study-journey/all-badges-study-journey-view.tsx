@@ -8,7 +8,7 @@ interface Props {
     userAcheivements: CompletedAchievementResponse[];
 }
 
-export default function AllBadgesView({
+export default function AllBadgesStudyJourneyView({
     userAcheivements
 }: Props) {
     const [loading, setLoading] = useState(false);

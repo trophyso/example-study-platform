@@ -6,7 +6,7 @@ import { useEffect, useMemo, useState } from "react";
 import { getStreak } from "../actions";
 import { getUserId } from "@/lib/user";
 import DefaultStudyJourneyView from "./default-study-journey-view";
-import AllBadgesView from "./all-badges-view";
+import AllBadgesStudyJourneyView from "./all-badges-study-journey-view";
 import { View } from "./types";
 
 export default function StudyJourney() {
@@ -94,7 +94,7 @@ export default function StudyJourney() {
         )}
 
         {view === "all-badges" && (
-          <AllBadgesView
+          <AllBadgesStudyJourneyView
             userAcheivements={data.achievements || []}
           />
         )}

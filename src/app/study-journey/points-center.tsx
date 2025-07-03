@@ -10,6 +10,7 @@ import { getPointsSummary } from "../actions";
 import { getUserId } from "@/lib/user";
 import { UsersPointsEventSummaryResponseItem } from "@trophyso/node/api";
 import dayjs from "dayjs";
+import { Button } from "@/components/ui/button";
 
 const chartConfig = {
   points: {
@@ -125,6 +126,9 @@ export default function PointsCenter() {
             <p className="font-semibold">
               Latest awards
             </p>
+            <Button variant="link" size="sm" className="pr-0 text-black text-xs underline">
+              How do I earn points?
+            </Button>
           </div>
           <div className="flex flex-col gap-2 divide-y divide-gray-100">
             {points?.awards?.map((award) => (
