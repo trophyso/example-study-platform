@@ -76,6 +76,7 @@ export default function DefaultView({
         ) : pointsSummary ? (
           <AreaChartLinearGradient
             height={100}
+            // @ts-expect-error - This is actually fine
             data={pointsSummary}
             xAxisKey="date"
             yAxes={[

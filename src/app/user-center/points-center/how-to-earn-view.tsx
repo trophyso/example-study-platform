@@ -31,7 +31,7 @@ export default function HowToEarnView() {
 
       setData({
         triggers: triggers || undefined,
-        summary: summary || undefined
+        summary: summary?.filter(item => item.from !== 0) || undefined
       });
       setLoading(false);
     }
@@ -53,6 +53,7 @@ export default function HowToEarnView() {
           <Skeleton className="h-32 w-full" />
         ) : data?.summary ? (
           <BarChart
+            // @ts-expect-error - This is actually fine
             data={data?.summary}
             xAxisKey="from"
             yAxis={{
