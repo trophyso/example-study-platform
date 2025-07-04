@@ -1,14 +1,14 @@
 import { AchievementWithStatsResponse, CompletedAchievementResponse } from "@trophyso/node/api";
 import { useEffect, useState } from "react";
-import { getAllAchievements } from "../actions";
+import { getAllAchievements } from "../../actions";
 import { Skeleton } from "@/components/ui/skeleton";
-import AllBadgesBadge from "./all-badges-badge";
+import Badge from "./badge";
 
 interface Props {
     userAcheivements: CompletedAchievementResponse[];
 }
 
-export default function AllBadgesStudyJourneyView({
+export default function AllBadgesView({
     userAcheivements
 }: Props) {
     const [loading, setLoading] = useState(false);
@@ -70,7 +70,7 @@ export default function AllBadgesStudyJourneyView({
                             );
 
                             return (
-                                <AllBadgesBadge
+                                <Badge
                                     key={achievement.id}
                                     achievement={achievement}
                                     completed={!!completed}
@@ -90,7 +90,7 @@ export default function AllBadgesStudyJourneyView({
                             );
 
                             return (
-                                <AllBadgesBadge
+                                <Badge
                                     key={achievement.id}
                                     achievement={achievement}
                                     completed={!!completed}
@@ -110,7 +110,7 @@ export default function AllBadgesStudyJourneyView({
                             );
 
                             return (
-                                <AllBadgesBadge
+                                <Badge
                                     key={achievement.id}
                                     achievement={achievement}
                                     completed={!!completed}

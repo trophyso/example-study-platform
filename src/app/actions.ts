@@ -1,7 +1,7 @@
 'use server';
 
 import { TrophyApiClient } from '@trophyso/node';
-import { EventResponse, StreakResponse, CompletedAchievementResponse, AchievementWithStatsResponse, GetUserPointsResponse, UsersPointsEventSummaryResponseItem } from '@trophyso/node/api';
+import { EventResponse, StreakResponse, CompletedAchievementResponse, AchievementWithStatsResponse, GetUserPointsResponse, UsersPointsEventSummaryResponseItem, PointsTriggerResponse, PointsSummaryResponse } from '@trophyso/node/api';
 import dayjs from 'dayjs';
 
 const FLASHCARDS_VIEWED_METRIC_KEY = "flashcards-viewed";
@@ -98,6 +98,24 @@ export async function getPointsSummary(userId: string): Promise<UsersPointsEvent
             startDate: now.subtract(6, 'day').toISOString().split('T')[0],
             endDate: now.toISOString().split('T')[0]
         });
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+}
+
+export async function getPointsTriggers(): Promise<PointsTriggerResponse[] | null> {
+    try {
+        return await trophy.points.triggers();
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+}
+
+export async function getOverallPointsSummary(): Promise<PointsSummaryResponse | null> {
+    try {
+        return await trophy.points.summary();
     } catch (error) {
         console.error(error);
         return null;

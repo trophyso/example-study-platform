@@ -1,12 +1,12 @@
 import { CompletedAchievementResponse, StreakResponse } from "@trophyso/node/api";
 import { GraduationCap } from "lucide-react";
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
-import { getAchievements } from "../actions";
+import { getAchievements } from "../../actions";
 import { useEffect, useMemo, useState } from "react";
-import { getStreak } from "../actions";
+import { getStreak } from "../../actions";
 import { getUserId } from "@/lib/user";
-import DefaultStudyJourneyView from "./default-study-journey-view";
-import AllBadgesStudyJourneyView from "./all-badges-study-journey-view";
+import DefaultView from "./default-view";
+import AllBadgesView from "./all-badges-view";
 import { View } from "./types";
 
 export default function StudyJourney() {
@@ -85,7 +85,7 @@ export default function StudyJourney() {
         </DialogHeader>
 
         {view === "default" && (
-          <DefaultStudyJourneyView
+          <DefaultView
             loading={loading}
             achievements={data.achievements}
             streak={data.streak}
@@ -94,7 +94,7 @@ export default function StudyJourney() {
         )}
 
         {view === "all-badges" && (
-          <AllBadgesStudyJourneyView
+          <AllBadgesView
             userAcheivements={data.achievements || []}
           />
         )}

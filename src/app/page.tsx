@@ -5,7 +5,7 @@ import Flashcards from "./flashcards";
 import { Toaster } from "@/components/ui/sonner"
 import PoweredBy from "./powered-by";
 import { UserPointsProvider } from "@/contexts/UserPointsContext";
-import UserCenter from "./study-journey/user-center";
+import UserCenter from "./user-center/user-center";
 
 export default function Home() {
   return (

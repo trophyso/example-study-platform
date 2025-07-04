@@ -7,7 +7,7 @@ interface Props {
     completed: boolean;
 }
 
-export default function AllBadgesBadge({ achievement, completed }: Props) {
+export default function Badge({ achievement, completed }: Props) {
     return (
         <div key={achievement.id} className="p-2 rounded-md border border-gray-200 flex flex-col gap-1 items-center shadow-sm">
             <Image

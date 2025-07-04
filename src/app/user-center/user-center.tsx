@@ -1,5 +1,5 @@
-import StudyJourney from "./study-journey";
-import PointsCenter from "./points-center";
+import StudyJourney from "./study-center/study-journey";
+import PointsCenter from "./points-center/points-center";
 
 export default function UserCenter() {
   return (

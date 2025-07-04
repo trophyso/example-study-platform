@@ -15,7 +15,7 @@ interface Props {
     setView: (view: View) => void;
 }
 
-export default function DefaultStudyJourneyView({
+export default function DefaultView({
     loading,
     achievements,
     streak,
