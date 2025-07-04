@@ -12,12 +12,22 @@ export default function PointsCenter() {
   const [open, setOpen] = useState(false);
   const { points, lastPoints, loading: pointsLoading } = useUserPoints();
   const [view, setView] = useState<View>("default");
+  const [isSpinning, setIsSpinning] = useState(false);
 
   useEffect(() => {
     if (open) {
       setView("default");
     }
   }, [open])
+
+  // Trigger spinning animation when points change
+  useEffect(() => {
+    if (points?.total !== lastPoints?.total && points?.total !== undefined) {
+      setIsSpinning(true);
+      const timer = setTimeout(() => setIsSpinning(false), 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [points?.total, lastPoints?.total]);
 
   const title = useMemo(() => {
     switch (view) {
@@ -46,7 +56,7 @@ export default function PointsCenter() {
               <Skeleton className="h-5 w-12 rounded-full" />
             ) : (
               <>
-                <Sparkle className="size-4" />
+                <Sparkle className={`size-4 transition-transform duration-1000 ${isSpinning ? 'animate-spin' : ''}`} />
                 <NumberTicker
                   value={points?.total || 0}
                   startValue={lastPoints?.total || 0}
