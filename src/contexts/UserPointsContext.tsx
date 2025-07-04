@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
+import { createContext, useContext, useEffect, useState, ReactNode, useCallback, useRef } from 'react';
 import { GetUserPointsResponse } from '@trophyso/node/api';
 import { getUserPoints } from '@/app/actions';
 import { getUserId } from '@/lib/user';
@@ -25,6 +25,7 @@ export function UserPointsProvider({ children }: UserPointsProviderProps) {
         = useState<GetUserPointsResponse | null>(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
     const fetchPoints = async () => {
         const userId = getUserId();
@@ -43,12 +44,27 @@ export function UserPointsProvider({ children }: UserPointsProviderProps) {
         }
     };
 
-    const refetch = async () => {
-        await fetchPoints();
-    };
+    const refetch = useCallback(async () => {
+        // Clear any existing timeout
+        if (timeoutRef.current) {
+            clearTimeout(timeoutRef.current);
+        }
+
+        // Set a new timeout to debounce the call
+        timeoutRef.current = setTimeout(() => {
+            fetchPoints();
+        }, 300);
+    }, []);
 
     useEffect(() => {
         fetchPoints();
+
+        // Cleanup timeout on unmount
+        return () => {
+            if (timeoutRef.current) {
+                clearTimeout(timeoutRef.current);
+            }
+        };
     }, []);
 
     const value: UserPointsContextType = {
