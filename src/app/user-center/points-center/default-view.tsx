@@ -61,13 +61,13 @@ export default function DefaultView({
         </div>
         <div>
           <p className="text-sm text-gray-500">
-            Total XP
+            Total energy
           </p>
         </div>
       </div>
       <div className="flex items-center justify-between">
         <p className="font-semibold">
-          XP earned this week
+          Energy earned this week
         </p>
       </div>
       <div className="min-h-[150px]">
@@ -102,7 +102,7 @@ export default function DefaultView({
           Latest awards
         </p>
         <Button variant="link" size="sm" className="pr-0 text-black text-xs underline" onClick={handleViewHowToEarnClick}>
-          How do I earn XP?
+          How do I earn energy?
         </Button>
       </div>
       <div className="flex flex-col gap-2 divide-y divide-gray-100">

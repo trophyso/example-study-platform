@@ -1,5 +1,5 @@
 import { PointsTriggerResponse } from "@trophyso/node/api";
-import { Sparkle } from "lucide-react";
+import { BatteryCharging, Sparkle } from "lucide-react";
 import { useMemo } from "react";
 
 interface Props {
@@ -26,7 +26,7 @@ export default function PointsTrigger({ trigger }: Props) {
             <p className="text-sm">{name}</p>
             <p className="text-sm font-semibold flex items-center gap-1">
                 +{trigger.points}
-                <Sparkle className="size-3" />
+                <BatteryCharging className="size-4" />
             </p>
         </div>
     )

@@ -75,7 +75,7 @@ export default function HowToEarnView() {
       </div>
       <div>
         <p className="text-sm font-semibold">
-          Ways to earn XP
+          Ways to earn energy
         </p>
       </div>
       <div>
