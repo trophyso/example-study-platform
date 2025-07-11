@@ -10,6 +10,7 @@ import { UsersPointsEventSummaryResponseItem } from "@trophyso/node/api";
 import dayjs from "dayjs";
 import { Button } from "@/components/ui/button";
 import { View } from "./types";
+import { Sparkle } from "lucide-react";
 
 const chartConfig = {
   points: {
@@ -35,6 +36,8 @@ export default function DefaultView({
 
       const userId = getUserId();
       const data = await getPointsSummary(userId);
+
+      console.log(data);
 
       setPointsSummary(data);
       setLoading(false);
@@ -108,8 +111,14 @@ export default function DefaultView({
       <div className="flex flex-col gap-2 divide-y divide-gray-100">
         {points?.awards?.map((award) => (
           <div key={award.id} className="flex items-center justify-between gap-2 text-sm py-0.5">
-            <p className="text-gray-500">{dayjs().format("DD-MM-YYYY")}</p>
-            <p className="font-semibold">+{award.awarded}</p>
+            <p className="text-gray-500">
+              {dayjs(award.date).format("DD-MM-YYYY")}
+            </p>
+            <p className="font-semibold">{award.total}</p>
+            <div className="flex items-center gap-1">
+              <p className="font-semibold">+{award.awarded}</p>
+              <Sparkle className="size-3" />
+            </div>
           </div>
         ))}
       </div>
