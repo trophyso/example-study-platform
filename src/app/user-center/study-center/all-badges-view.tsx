@@ -1,8 +1,9 @@
 import { AchievementWithStatsResponse, CompletedAchievementResponse } from "@trophyso/node/api";
 import { useEffect, useState } from "react";
-import { getAllAchievements } from "../../actions";
 import { Skeleton } from "@/components/ui/skeleton";
 import Badge from "./badge";
+import { getAchievements } from "@/app/actions";
+import { getUserId } from "@/lib/user";
 
 interface Props {
     userAcheivements: CompletedAchievementResponse[];
@@ -19,7 +20,9 @@ export default function AllBadgesView({
         const fetchAchievements = async () => {
             setLoading(true);
 
-            const achievements = await getAllAchievements();
+            const userId = getUserId();
+
+            const achievements = await getAchievements(userId, true);
 
             if (!achievements) {
                 setLoading(false);

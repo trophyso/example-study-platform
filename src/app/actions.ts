@@ -1,10 +1,11 @@
 'use server';
 
 import { TrophyApiClient } from '@trophyso/node';
-import { EventResponse, StreakResponse, CompletedAchievementResponse, AchievementWithStatsResponse, GetUserPointsResponse, UsersPointsEventSummaryResponseItem, PointsTriggerResponse, PointsSummaryResponse } from '@trophyso/node/api';
+import { EventResponse, StreakResponse, CompletedAchievementResponse, GetUserPointsResponse, UsersPointsEventSummaryResponseItem, PointsSummaryResponse, PointsSystemResponse } from '@trophyso/node/api';
 import dayjs from 'dayjs';
 
 const FLASHCARDS_VIEWED_METRIC_KEY = "flashcards-viewed";
+const POINTS_SYSTEM_KEY = "points";
 
 // Set up Trophy SDK with API key
 const trophy = new TrophyApiClient({
@@ -33,9 +34,11 @@ export async function viewFlashcard(userId: string): Promise<EventResponse | nul
  * Get the achievements for a user
  * @returns The achievements for the user
  */
-export async function getAchievements(userId: string): Promise<CompletedAchievementResponse[] | null> {
+export async function getAchievements(userId: string, includeIncomplete: boolean = false): Promise<CompletedAchievementResponse[] | null> {
     try {
-        return await trophy.users.allAchievements(userId);
+        return await trophy.users.achievements(userId, {
+            includeIncomplete: includeIncomplete ? "true" : undefined
+        });
     } catch (error) {
         console.error(error);
         return null;
@@ -58,12 +61,12 @@ export async function getStreak(userId: string): Promise<StreakResponse | null> 
 }
 
 /**
- * Get all achievements that can be completed
- * @returns All achievements
+ * Get the points system
+ * @returns The points system
  */
-export async function getAllAchievements(): Promise<AchievementWithStatsResponse[] | null> {
+export async function getPointsSystem(): Promise<PointsSystemResponse | null> {
     try {
-        return await trophy.achievements.all();
+        return await trophy.points.system(POINTS_SYSTEM_KEY);
     } catch (error) {
         console.error(error);
         return null;
@@ -76,7 +79,7 @@ export async function getAllAchievements(): Promise<AchievementWithStatsResponse
  */
 export async function getUserPoints(userId: string): Promise<GetUserPointsResponse | null> {
     try {
-        return await trophy.users.points(userId, {
+        return await trophy.users.points(userId, POINTS_SYSTEM_KEY, {
             awards: 5
         });
     } catch (error) {
@@ -93,20 +96,15 @@ export async function getPointsSummary(userId: string): Promise<UsersPointsEvent
     try {
         const now = dayjs();
 
-        return await trophy.users.pointsEventSummary(userId, {
-            aggregation: "daily",
-            startDate: now.subtract(6, 'day').toISOString().split('T')[0],
-            endDate: now.toISOString().split('T')[0]
-        });
-    } catch (error) {
-        console.error(error);
-        return null;
-    }
-}
-
-export async function getPointsTriggers(): Promise<PointsTriggerResponse[] | null> {
-    try {
-        return await trophy.points.triggers();
+        return await trophy.users.pointsEventSummary(
+            userId,
+            POINTS_SYSTEM_KEY,
+            {
+                aggregation: "daily",
+                startDate: now.subtract(6, 'day').toISOString().split('T')[0],
+                endDate: now.toISOString().split('T')[0]
+            }
+        );
     } catch (error) {
         console.error(error);
         return null;
@@ -115,7 +113,7 @@ export async function getPointsTriggers(): Promise<PointsTriggerResponse[] | nul
 
 export async function getOverallPointsSummary(): Promise<PointsSummaryResponse | null> {
     try {
-        return await trophy.points.summary();
+        return await trophy.points.summary(POINTS_SYSTEM_KEY);
     } catch (error) {
         console.error(error);
         return null;

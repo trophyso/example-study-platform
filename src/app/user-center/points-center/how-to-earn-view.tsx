@@ -1,7 +1,7 @@
 import { Skeleton } from "@/components/ui/skeleton";
 import { useEffect, useState } from "react";
-import { getOverallPointsSummary, getPointsTriggers } from "../../actions";
-import { PointsSummaryResponse, PointsTriggerResponse } from "@trophyso/node/api";
+import { getOverallPointsSummary, getPointsSystem } from "../../actions";
+import { PointsSummaryResponse, PointsSystemResponse } from "@trophyso/node/api";
 import PointsTrigger from "./trigger";
 import { BarChart } from "@/components/charts/bar-chart";
 import { ChartConfig } from "@/components/ui/chart";
@@ -16,7 +16,7 @@ const chartConfig = {
 export default function HowToEarnView() {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<{
-    triggers: PointsTriggerResponse[] | undefined;
+    system: PointsSystemResponse | undefined;
     summary: PointsSummaryResponse | undefined;
   }>();
 
@@ -24,13 +24,13 @@ export default function HowToEarnView() {
     async function fetchPointsData() {
       setLoading(true);
 
-      const [triggers, summary] = await Promise.all([
-        getPointsTriggers(),
+      const [system, summary] = await Promise.all([
+        getPointsSystem(),
         getOverallPointsSummary()
       ]);
 
       setData({
-        triggers: triggers || undefined,
+        system: system || undefined,
         summary: summary?.filter(item => item.from !== 0) || undefined
       });
       setLoading(false);
@@ -81,9 +81,9 @@ export default function HowToEarnView() {
       <div>
         {loading ? (
           <Skeleton className="h-32 w-full" />
-        ) : data?.triggers && data.triggers.length > 0 ? (
+        ) : data?.system && data.system.triggers.length > 0 ? (
           <div className="flex flex-col gap-1">
-            {data.triggers.map((trigger) => (
+            {data.system.triggers.map((trigger) => (
               <PointsTrigger key={trigger.id} trigger={trigger} />
             ))}
           </div>

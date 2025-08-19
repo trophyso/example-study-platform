@@ -22,7 +22,7 @@ export default function Badge({ achievement, completed }: Props) {
             />
             <p className={
                 clsx(
-                    "font-semibold",
+                    "font-semibold truncate",
                     !completed && "text-gray-500"
                 )
             }>
@@ -34,7 +34,7 @@ export default function Badge({ achievement, completed }: Props) {
                     !completed && "text-gray-500"
                 )
             }>
-                {achievement.completedPercentage}% of users
+                {achievement.rarity}% of users
             </p>
         </div>
     )
