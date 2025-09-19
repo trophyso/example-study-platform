@@ -28,7 +28,6 @@ export default function DefaultView() {
         setLoadingUserLeaderboard(true);
 
         const userLeaderboard = await getUserLeaderboard(userId);
-        console.log(userLeaderboard);
 
         setUserLeaderboard(userLeaderboard);
         setLoadingUserLeaderboard(false);
@@ -43,11 +42,13 @@ export default function DefaultView() {
     }, [fetchLeaderboard]);
 
     return (
-        <div className="flex flex-col gap-2">
-            <div>
-                {loadingUserLeaderboard && <Skeleton className="w-full h-50" />}
+        <div className="flex flex-col gap-5">
+            <div className="flex items-center justify-center">
+                {loadingUserLeaderboard && (
+                    <Skeleton className="w-1/3 h-20 rounded-xl" />
+                )}
                 {!loadingUserLeaderboard && userLeaderboard && (
-                    <p>{userLeaderboard.rank}</p>
+                    <p className="text-2xl font-bold">{userLeaderboard.rank}</p>
                 )}
             </div>
             <div>
@@ -68,10 +69,37 @@ export default function DefaultView() {
                             Top 1000
                         </TabsTrigger>
                     </TabsList>
-                    {loadingLeaderboard && <Skeleton className="w-full h-50" />}
-                    {!loadingLeaderboard && leaderboard && (
-                        <LeaderboardRankings leaderboard={leaderboard} />
+                    {loadingLeaderboard && (
+                        <Skeleton className="w-full h-72 rounded-xl" />
                     )}
+                    {!loadingLeaderboard && (
+                        leaderboard ? (
+                            leaderboard.rankings.length > 0 ? (
+                                <LeaderboardRankings leaderboard={leaderboard} />
+                            ) : (
+                                <div className="flex flex-col gap-2 items-center justify-center h-72">
+                                    <p className="text-center text-lg font-bold">
+                                        No rankings yet
+                                    </p>
+                                    <p
+                                        className="text-center text-sm text-gray-500"
+                                    >
+                                        Flip a flashcard to start your streak and earn XP!
+                                    </p>
+                                </div>
+                            )
+                        ) : (
+                            <div className="flex flex-col gap-2 items-center justify-center h-72">
+                                <p className="text-center text-lg font-bold">
+                                    Could not load leaderboard
+                                </p>
+                                <p
+                                    className="text-center text-sm text-gray-500"
+                                >
+                                    Please try again later
+                                </p>
+                            </div>
+                        ))}
                 </Tabs>
             </div>
         </div>

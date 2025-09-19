@@ -135,7 +135,7 @@ export async function getLeaderboard(limit?: number): Promise<LeaderboardRespons
 
 export async function getUserLeaderboard(userId: string): Promise<UserLeaderboardResponse | null> {
     try {
-        return await trophy.users.leaderboards(userId, LEADERBOARD_KEY);
+        return await trophy.users.leaderboard(userId, LEADERBOARD_KEY);
     } catch (error) {
         console.error(error);
         return null;
