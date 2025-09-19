@@ -1,11 +1,12 @@
 'use server';
 
 import { TrophyApiClient } from '@trophyso/node';
-import { EventResponse, StreakResponse, CompletedAchievementResponse, GetUserPointsResponse, UsersPointsEventSummaryResponseItem, PointsSummaryResponse, PointsSystemResponse } from '@trophyso/node/api';
+import { EventResponse, StreakResponse, CompletedAchievementResponse, GetUserPointsResponse, UsersPointsEventSummaryResponseItem, PointsSummaryResponse, PointsSystemResponse, LeaderboardResponseWithRankings, UserLeaderboardResponse } from '@trophyso/node/api';
 import dayjs from 'dayjs';
 
 const FLASHCARDS_VIEWED_METRIC_KEY = "flashcards-viewed";
 const POINTS_SYSTEM_KEY = "points";
+const LEADERBOARD_KEY = "daily-champions";
 
 // Set up Trophy SDK with API key
 const trophy = new TrophyApiClient({
@@ -114,6 +115,27 @@ export async function getPointsSummary(userId: string): Promise<UsersPointsEvent
 export async function getOverallPointsSummary(): Promise<PointsSummaryResponse | null> {
     try {
         return await trophy.points.summary(POINTS_SYSTEM_KEY);
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+}
+
+export async function getLeaderboard(limit?: number): Promise<LeaderboardResponseWithRankings | null> {
+    try {
+        return await trophy.leaderboards.get(LEADERBOARD_KEY, {
+            limit: limit || 10,
+            offset: 0
+        });
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+}
+
+export async function getUserLeaderboard(userId: string): Promise<UserLeaderboardResponse | null> {
+    try {
+        return await trophy.users.leaderboards(userId, LEADERBOARD_KEY);
     } catch (error) {
         console.error(error);
         return null;
