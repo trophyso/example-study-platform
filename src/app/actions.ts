@@ -142,9 +142,11 @@ export async function getLeaderboard(
 
 export async function getUserLeaderboard(userId: string, run?: string): Promise<UserLeaderboardResponse | null> {
     try {
-        return await trophy.users.leaderboard(userId, LEADERBOARD_KEY, {
+        const resp = await trophy.users.leaderboard(userId, LEADERBOARD_KEY, {
             run
         });
+        console.log("User leaderboard response", resp);
+        return resp;
     } catch (error) {
         console.error(error);
         return null;

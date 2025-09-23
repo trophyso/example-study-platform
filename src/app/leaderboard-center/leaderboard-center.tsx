@@ -1,15 +1,17 @@
-import { Dialog, DialogContent, DialogDescription, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { getLeaderboard } from "../actions";
 import { useEffect, useState } from "react";
 import { LeaderboardResponseWithRankings } from "@trophyso/node/api";
 import LeaderboardButton from "./leaderboard-button";
-import LeaderboardIcon from "@/components/icons/leaderboard";
 import DefaultView from "./default-view";
+import { View } from "./types";
+import JourneyView from "./journey-view";
 
 export default function LeaderboardCenter() {
     const [leaderboard, setLeaderboard]
         = useState<LeaderboardResponseWithRankings | null>(null);
     const [loading, setLoading] = useState(false);
+    const [view, setView] = useState<View>("default");
 
     useEffect(() => {
         const fetchLeaderboard = async () => {
@@ -31,20 +33,14 @@ export default function LeaderboardCenter() {
                 </DialogTrigger>
                 <DialogContent>
                     {!loading && leaderboard && (
-                        <div className="flex flex-col gap-5">
-                            <div className="flex flex-col gap-2">
-                                <DialogTitle
-                                    className="flex items-center gap-2"
-                                >
-                                    <LeaderboardIcon className="size-5" />
-                                    {leaderboard.name}
-                                </DialogTitle>
-                                <DialogDescription>
-                                    {leaderboard.description}
-                                </DialogDescription>
-                            </div>
-                            <DefaultView />
-                        </div>
+                        <>
+                            {view === "default" && (
+                                <DefaultView changeView={setView} />
+                            )}
+                            {view === "journey" && (
+                                <JourneyView changeView={setView} />
+                            )}
+                        </>
                     )}
                 </DialogContent>
             </Dialog>
