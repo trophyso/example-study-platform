@@ -7,6 +7,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { getUserId } from "@/lib/user";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import dayjs, { Dayjs, ManipulateType, OpUnitType } from "dayjs";
+import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
 
 interface QueryState {
     limit?: number;
@@ -85,7 +86,6 @@ export default function DefaultView() {
     }, [query]);
 
     const runDates: Dayjs[] = useMemo(() => {
-        console.log(leaderboard);
         if (!leaderboard?.start || !leaderboard?.runUnit) {
             return [];
         }
@@ -101,8 +101,6 @@ export default function DefaultView() {
             dates.push(current);
             current = current.add(1, unit as ManipulateType);
         }
-
-        console.log(dates);
 
         return dates;
     }, [leaderboard]);
@@ -156,8 +154,14 @@ export default function DefaultView() {
                                     {runDates.map((date: Dayjs) => {
                                         const dateKey =
                                             date.format("YYYY-MM-DD");
-                                        const isYesterday = date.isSame(dayjs().subtract(1, "day"), "day");
-                                        const isToday = date.isSame(dayjs(), "day");
+                                        const isYesterday = date.isSame(
+                                            dayjs().subtract(1, "day"),
+                                            "day"
+                                        );
+                                        const isToday = date.isSame(
+                                            dayjs(),
+                                            "day"
+                                        );
 
                                         return (
                                             <SelectItem
