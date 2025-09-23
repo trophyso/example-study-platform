@@ -7,7 +7,6 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { getUserId } from "@/lib/user";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import dayjs, { Dayjs, ManipulateType, OpUnitType } from "dayjs";
-import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
 
 interface QueryState {
     limit?: number;
