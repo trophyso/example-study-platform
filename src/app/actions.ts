@@ -121,11 +121,18 @@ export async function getOverallPointsSummary(): Promise<PointsSummaryResponse |
     }
 }
 
-export async function getLeaderboard(limit?: number): Promise<LeaderboardResponseWithRankings | null> {
+export async function getLeaderboard(
+    limit?: number,
+    offset?: number,
+    userId?: string,
+    runDate?: string
+): Promise<LeaderboardResponseWithRankings | null> {
     try {
         return await trophy.leaderboards.get(LEADERBOARD_KEY, {
             limit: limit || 10,
-            offset: 0
+            offset: offset || 0,
+            userId: userId || undefined,
+            run: runDate || undefined
         });
     } catch (error) {
         console.error(error);
@@ -133,9 +140,11 @@ export async function getLeaderboard(limit?: number): Promise<LeaderboardRespons
     }
 }
 
-export async function getUserLeaderboard(userId: string): Promise<UserLeaderboardResponse | null> {
+export async function getUserLeaderboard(userId: string, run?: string): Promise<UserLeaderboardResponse | null> {
     try {
-        return await trophy.users.leaderboard(userId, LEADERBOARD_KEY);
+        return await trophy.users.leaderboard(userId, LEADERBOARD_KEY, {
+            run
+        });
     } catch (error) {
         console.error(error);
         return null;

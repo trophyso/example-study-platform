@@ -17,7 +17,7 @@ export default function LeaderboardButton({ leaderboard }: Props) {
             <div className="flex gap-3 items-center">
                 <LeaderboardIcon className="size-5" />
                 <p className="text-sm">
-                    {`${leaderboard.name}: Ending in ${dayjs(leaderboard.end).endOf(leaderboard.runUnit as OpUnitType).toNow(false)}`}
+                    {`${leaderboard.name}: Ending in ${dayjs(leaderboard.end).endOf(leaderboard.runUnit as OpUnitType).toNow(true)}`}
                 </p>
             </div>
         </ShinyButton>

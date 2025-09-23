@@ -34,8 +34,7 @@ export default function LeaderboardRankings({ leaderboard }: Props) {
                     <tr
                         key={ranking.userId}
                         className={cn(
-                            idx % 2 !== 0 && "bg-muted",
-                            idx === leaderboard.rankings.length - 1 ? "border-b-0" : "border-b"
+                            idx % 2 !== 0 && "bg-muted"
                         )}
                     >
                         <td className="text-left flex gap-2 items-center p-2">

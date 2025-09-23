@@ -31,14 +31,18 @@ export default function LeaderboardCenter() {
                 </DialogTrigger>
                 <DialogContent>
                     {!loading && leaderboard && (
-                        <div className="flex flex-col gap-3">
-                            <DialogTitle className="flex items-center gap-2">
-                                <LeaderboardIcon className="size-5" />
-                                {leaderboard.name}
-                            </DialogTitle>
-                            <DialogDescription>
-                                {leaderboard.description}
-                            </DialogDescription>
+                        <div className="flex flex-col gap-5">
+                            <div className="flex flex-col gap-2">
+                                <DialogTitle
+                                    className="flex items-center gap-2"
+                                >
+                                    <LeaderboardIcon className="size-5" />
+                                    {leaderboard.name}
+                                </DialogTitle>
+                                <DialogDescription>
+                                    {leaderboard.description}
+                                </DialogDescription>
+                            </div>
                             <DefaultView />
                         </div>
                     )}
