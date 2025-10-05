@@ -1,20 +1,20 @@
-import { Skeleton } from "@/components/ui/skeleton";
-import { useUserPoints } from "@/contexts/UserPointsContext";
 import { useEffect, useState } from "react";
+import { useUserEnergy } from "@/contexts/UserEnergyContext";
+import { getUserId } from "@/lib/user";
+import { getEnergySummary } from "@/app/actions";
+import { UsersPointsEventSummaryResponseItem } from "@trophyso/node/api";
 import { NumberTicker } from "@/components/magicui/number-ticker";
 import { AreaChartLinearGradient } from "@/components/charts/area-chart-linear-gradient";
 import { ChartConfig } from "@/components/ui/chart";
-import { getPointsSummary } from "../../actions";
-import { getUserId } from "@/lib/user";
-import { UsersPointsEventSummaryResponseItem } from "@trophyso/node/api";
-import dayjs from "dayjs";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
+import { Zap } from "lucide-react";
+import dayjs from "dayjs";
 import { View } from "./types";
-import { Sparkle } from "lucide-react";
 
 const chartConfig = {
-  points: {
-    label: "XP",
+  energy: {
+    label: "Energy",
     color: "var(--primary)",
   },
 } satisfies ChartConfig
@@ -27,58 +27,56 @@ export default function DefaultView({
   setView
 }: Props) {
   const [loading, setLoading] = useState(false);
-  const { points } = useUserPoints();
-  const [pointsSummary, setPointsSummary] = useState<UsersPointsEventSummaryResponseItem[] | null>(null);
+  const { energy } = useUserEnergy();
+  const [energySummary, setEnergySummary] = useState<UsersPointsEventSummaryResponseItem[] | null>(null);
 
   useEffect(() => {
-    async function fetchPointsData() {
+    async function fetchEnergyData() {
       setLoading(true);
 
       const userId = getUserId();
-      const data = await getPointsSummary(userId);
+      const data = await getEnergySummary(userId);
 
-      setPointsSummary(data);
+      setEnergySummary(data);
       setLoading(false);
     }
 
-    if (!open) return;
-
-    fetchPointsData();
+    fetchEnergyData();
   }, [])
 
-  const handleViewHowToEarnClick = () => {
-    setView("how-to-earn");
+  const handleViewHowToRechargeClick = () => {
+    setView("how-to-recharge");
   }
 
   return (
     <div className="flex flex-col gap-3 w-full min-h-[500px]">
-      <div className="flex flex-col items-center justify-center my-5 gap-1">
+      <div className="flex flex-col items-center justify-center my-4 gap-1">
         <div className="flex items-center justify-center gap-1">
           <NumberTicker
-            value={points?.total || 0}
+            value={energy?.total || 0}
             duration={0.1}
             className="text-4xl font-medium"
           />
         </div>
         <div>
           <p className="text-sm text-gray-500">
-            Total XP
+            Current Energy
           </p>
         </div>
       </div>
       <div className="flex items-center justify-between">
         <p className="font-semibold">
-          XP earned this week
+          Energy usage this week
         </p>
       </div>
-      <div className="min-h-[150px]">
+      <div className="min-h-[125px]">
         {loading ? (
           <Skeleton className="h-32 w-full" />
-        ) : pointsSummary ? (
+        ) : energySummary ? (
           <AreaChartLinearGradient
             height={100}
             // @ts-expect-error - This is actually fine
-            data={pointsSummary}
+            data={energySummary}
             xAxisKey="date"
             yAxes={[
               {
@@ -100,22 +98,22 @@ export default function DefaultView({
       </div>
       <div className="flex items-center justify-between">
         <p className="font-semibold">
-          Latest awards
+          Latest energy changes
         </p>
-        <Button variant="link" size="sm" className="pr-0 text-black text-xs underline" onClick={handleViewHowToEarnClick}>
-          How do I earn XP?
+        <Button variant="link" size="sm" className="pr-0 text-black text-xs underline" onClick={handleViewHowToRechargeClick}>
+          How do I recharge?
         </Button>
       </div>
       <div className="flex flex-col gap-2 divide-y divide-gray-100">
-        {points?.awards?.map((award) => (
+        {energy?.awards?.map((award) => (
           <div key={award.id} className="flex items-center justify-between gap-2 text-sm py-0.5">
             <p className="text-gray-500">
               {dayjs(award.date).format("DD-MM-YYYY")}
             </p>
             <p className="font-semibold">{award.total}</p>
             <div className="flex items-center gap-1">
-              <p className="font-semibold">+{award.awarded}</p>
-              <Sparkle className="size-3" />
+              <p className="font-semibold">{award.awarded ? `${award.awarded > 0 ? '+' : ''}${award.awarded}` : ''}</p>
+              <Zap className="size-3" />
             </div>
           </div>
         ))}

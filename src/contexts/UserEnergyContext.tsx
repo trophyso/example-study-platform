@@ -2,34 +2,33 @@
 
 import { createContext, useContext, useEffect, useState, ReactNode, useCallback, useRef } from 'react';
 import { GetUserPointsResponse } from '@trophyso/node/api';
-import { getUserPoints } from '@/app/actions';
+import { getUserEnergy } from '@/app/actions';
 import { getUserId } from '@/lib/user';
 import { useUserIdentification } from './UserIdentificationContext';
 
-interface UserPointsContextType {
-    points: GetUserPointsResponse | null;
-    lastPoints: GetUserPointsResponse | null;
+interface UserEnergyContextType {
+    energy: GetUserPointsResponse | null;
+    lastEnergy: GetUserPointsResponse | null;
     loading: boolean;
     error: string | null;
     refetch: () => Promise<void>;
 }
 
-const UserPointsContext = createContext<UserPointsContextType | undefined>(undefined);
+const UserEnergyContext = createContext<UserEnergyContextType | undefined>(undefined);
 
-interface UserPointsProviderProps {
+interface UserEnergyProviderProps {
     children: ReactNode;
 }
 
-export function UserPointsProvider({ children }: UserPointsProviderProps) {
+export function UserEnergyProvider({ children }: UserEnergyProviderProps) {
     const { isIdentified } = useUserIdentification();
-    const [points, setPoints] = useState<GetUserPointsResponse | null>(null);
-    const [lastPoints, setLastPoints]
-        = useState<GetUserPointsResponse | null>(null);
+    const [energy, setEnergy] = useState<GetUserPointsResponse | null>(null);
+    const [lastEnergy, setLastEnergy] = useState<GetUserPointsResponse | null>(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-    const fetchPoints = async () => {
+    const fetchEnergy = async () => {
         if (!isIdentified) {
             return;
         }
@@ -40,11 +39,11 @@ export function UserPointsProvider({ children }: UserPointsProviderProps) {
         setError(null);
 
         try {
-            setLastPoints(points);
-            const pointsData = await getUserPoints(userId);
-            setPoints(pointsData);
+            setLastEnergy(energy);
+            const energyData = await getUserEnergy(userId);
+            setEnergy(energyData);
         } catch (err) {
-            setError(err instanceof Error ? err.message : 'Failed to fetch points');
+            setError(err instanceof Error ? err.message : 'Failed to fetch energy');
         } finally {
             setLoading(false);
         }
@@ -58,7 +57,7 @@ export function UserPointsProvider({ children }: UserPointsProviderProps) {
 
         // Set a new timeout to debounce the call
         timeoutRef.current = setTimeout(() => {
-            fetchPoints();
+            fetchEnergy();
         }, 300);
     }, [isIdentified]);
 
@@ -67,7 +66,7 @@ export function UserPointsProvider({ children }: UserPointsProviderProps) {
             return;
         }
 
-        fetchPoints();
+        fetchEnergy();
 
         // Cleanup timeout on unmount
         return () => {
@@ -77,27 +76,27 @@ export function UserPointsProvider({ children }: UserPointsProviderProps) {
         };
     }, [isIdentified]);
 
-    const value: UserPointsContextType = {
-        points,
-        lastPoints,
+    const value: UserEnergyContextType = {
+        energy,
+        lastEnergy,
         loading,
         error,
         refetch,
     };
 
     return (
-        <UserPointsContext.Provider value={value}>
+        <UserEnergyContext.Provider value={value}>
             {children}
-        </UserPointsContext.Provider>
+        </UserEnergyContext.Provider>
     );
 }
 
-export function useUserPoints() {
-    const context = useContext(UserPointsContext);
+export function useUserEnergy() {
+    const context = useContext(UserEnergyContext);
 
     if (context === undefined) {
-        throw new Error('useUserPoints must be used within a UserPointsProvider');
+        throw new Error('useUserEnergy must be used within a UserEnergyProvider');
     }
 
     return context;
-} 
+}
