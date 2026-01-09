@@ -1,7 +1,7 @@
 'use server';
 
 import { TrophyApiClient } from '@trophyso/node';
-import { EventResponse, StreakResponse, CompletedAchievementResponse, GetUserPointsResponse, UsersPointsEventSummaryResponseItem, PointsSummaryResponse, PointsSystemResponse, LeaderboardResponseWithRankings, UserLeaderboardResponse, User } from '@trophyso/node/api';
+import { EventResponse, StreakResponse, GetUserPointsResponse, UsersPointsEventSummaryResponseItem, PointsSummaryResponse, PointsSystemResponse, LeaderboardResponseWithRankings, User, UserAchievementWithStatsResponse, UserLeaderboardResponseWithHistory } from '@trophyso/node/api';
 import dayjs from 'dayjs';
 
 const FLASHCARDS_VIEWED_METRIC_KEY = "flashcards-viewed";
@@ -36,7 +36,7 @@ export async function viewFlashcard(userId: string): Promise<EventResponse | nul
  * Get the achievements for a user
  * @returns The achievements for the user
  */
-export async function getAchievements(userId: string, includeIncomplete: boolean = false): Promise<CompletedAchievementResponse[] | null> {
+export async function getAchievements(userId: string, includeIncomplete: boolean = false): Promise<UserAchievementWithStatsResponse[] | null> {
     try {
         return await trophy.users.achievements(userId, {
             includeIncomplete: includeIncomplete ? "true" : undefined
@@ -141,7 +141,7 @@ export async function getLeaderboard(
     }
 }
 
-export async function getUserLeaderboard(userId: string, run?: string): Promise<UserLeaderboardResponse | null> {
+export async function getUserLeaderboard(userId: string, run?: string): Promise<UserLeaderboardResponseWithHistory | null> {
     try {
         return await trophy.users.leaderboard(userId, LEADERBOARD_KEY, {
             run

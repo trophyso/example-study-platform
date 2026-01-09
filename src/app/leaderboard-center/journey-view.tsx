@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { LeaderboardResponseWithRankings, UserLeaderboardResponse } from "@trophyso/node/api";
+import { LeaderboardResponseWithRankings, UserLeaderboardResponseWithHistory } from "@trophyso/node/api";
 import { getLeaderboard, getUserLeaderboard } from "../actions";
 import { getUserId } from "@/lib/user";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -46,7 +46,7 @@ export default function JourneyView({
     const [, setLoadingLeaderboard] = useState(false);
     const [loadingUserLeaderboard, setLoadingUserLeaderboard] = useState(false);
     const [leaderboard, setLeaderboard] = useState<LeaderboardResponseWithRankings | null>(null);
-    const [userLeaderboard, setUserLeaderboard] = useState<UserLeaderboardResponse | null>(null);
+    const [userLeaderboard, setUserLeaderboard] = useState<UserLeaderboardResponseWithHistory | null>(null);
 
     const fetchLeaderboard = useCallback(async () => {
         setLoadingLeaderboard(true);
