@@ -1,5 +1,5 @@
 import { Separator } from "@/components/ui/separator";
-import { CompletedAchievementResponse, StreakResponse } from "@trophyso/node/api";
+import { StreakResponse, UserAchievementWithStatsResponse } from "@trophyso/node/api";
 import { Flame } from "lucide-react";
 import Image from "next/image";
 import dayjs from 'dayjs';
@@ -10,7 +10,7 @@ import { View } from "./types";
 
 interface Props {
     loading: boolean;
-    achievements?: CompletedAchievementResponse[];
+    achievements?: UserAchievementWithStatsResponse[];
     streak?: StreakResponse;
     setView: (view: View) => void;
 }

@@ -1,4 +1,4 @@
-import { CompletedAchievementResponse, StreakResponse } from "@trophyso/node/api";
+import { UserAchievementWithStatsResponse, StreakResponse } from "@trophyso/node/api";
 import { GraduationCap } from "lucide-react";
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { getAchievements } from "../../actions";
@@ -11,7 +11,7 @@ import { View } from "./types";
 
 export default function StudyJourney() {
   const [data, setData] = useState<{
-    achievements?: CompletedAchievementResponse[];
+    achievements?: UserAchievementWithStatsResponse[];
     streak?: StreakResponse;
   }>({
     achievements: undefined,

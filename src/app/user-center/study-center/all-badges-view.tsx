@@ -1,4 +1,4 @@
-import { AchievementWithStatsResponse, CompletedAchievementResponse } from "@trophyso/node/api";
+import { AchievementWithStatsResponse, UserAchievementWithStatsResponse } from "@trophyso/node/api";
 import { useEffect, useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import Badge from "./badge";
@@ -6,7 +6,7 @@ import { getAchievements } from "@/app/actions";
 import { getUserId } from "@/lib/user";
 
 interface Props {
-    userAcheivements: CompletedAchievementResponse[];
+    userAcheivements: UserAchievementWithStatsResponse[];
 }
 
 export default function AllBadgesView({
@@ -14,7 +14,7 @@ export default function AllBadgesView({
 }: Props) {
     const [loading, setLoading] = useState(false);
     const [achievements, setAchievements]
-        = useState<Record<"metric" | "streak" | "api", AchievementWithStatsResponse[]>>();
+        = useState<Record<"metric" | "streak" | "api", UserAchievementWithStatsResponse[]>>();
 
     useEffect(() => {
         const fetchAchievements = async () => {
