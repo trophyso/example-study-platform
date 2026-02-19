@@ -11,7 +11,7 @@
   <p align="center">
     An example flashcard study platform with gamification features powered by Trophy.
     <br />
-    <a href="https://docs.trophy.so/guides/tutorials/how-to-build-a-gamified-study-platform">
+    <a href="https://docs.trophy.so/guides/gamified-study-platform">
         <strong>Tutorial »</strong>
     </a>
     <a href="http://trophy.so?utm_source=github&utm_medium=example-apps&utm_campaign=example-study-app">
@@ -19,7 +19,7 @@
     </a>
     <br />
     <br />
-    <a href="https://github.com/trophyso/example-study-platform">View Demo</a>
+    <a href="https://examples.trophy.so/study-platform">View Demo</a>
     &middot;
     <a href="https://github.com/trophyso/example-study-platform/issues/new?labels=bug&template=bug-report---.md">Report Bug</a>
     &middot;
@@ -77,7 +77,7 @@ npm run dev
 
 ### Prerequisites
 
-To use the gamification features, you'll need to create a Trophy account. Follow the [tutorial](https://docs.trophy.so/guides/tutorials/how-to-build-a-gamified-study-platform) to get started or [create an account](http://app.trophy.so/sign-up?utm_source=github&utm_medium=example-apps&utm_campaign=example-study-app).
+To use the gamification features, you'll need to create a Trophy account. Follow the [tutorial](https://docs.trophy.so/guides/gamified-study-platform) to get started or [create an account](http://app.trophy.so/sign-up?utm_source=github&utm_medium=example-apps&utm_campaign=example-study-app).
 
 Find or create your API key here and add it to your environment variables as follows:
 
