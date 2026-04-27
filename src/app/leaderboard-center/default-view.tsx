@@ -32,7 +32,7 @@ export default function DefaultView({
         limit: 10,
         offset: 0,
         userId: undefined,
-        runDate: dayjs().format("YYYY-MM-DD")
+        runDate: undefined
     });
     const [loadingLeaderboard, setLoadingLeaderboard] = useState(false);
     const [loadingUserLeaderboard, setLoadingUserLeaderboard] = useState(false);
@@ -48,6 +48,8 @@ export default function DefaultView({
             query.userId,
             query.runDate
         );
+
+        console.log(leaderboard);
 
         setLeaderboard(leaderboard);
         setLoadingLeaderboard(false);
