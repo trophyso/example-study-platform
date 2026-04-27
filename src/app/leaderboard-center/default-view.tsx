@@ -49,8 +49,6 @@ export default function DefaultView({
             query.runDate
         );
 
-        console.log(leaderboard);
-
         setLeaderboard(leaderboard);
         setLoadingLeaderboard(false);
     }, [query]);
