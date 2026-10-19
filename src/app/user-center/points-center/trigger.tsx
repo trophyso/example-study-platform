@@ -1,9 +1,9 @@
-import { PointsTriggerResponse } from "@trophyso/node/api";
+import { PointsTrigger as PointsTriggerType } from "@trophyso/node/api";
 import { Sparkle } from "lucide-react";
 import { useMemo } from "react";
 
 interface Props {
-    trigger: PointsTriggerResponse;
+    trigger: PointsTriggerType;
 }
 
 export default function PointsTrigger({ trigger }: Props) {
