@@ -9,10 +9,10 @@
 
 <h3 align="center">Example Study Platform</h3>
   <p align="center">
-    An example flashcard study platform with gamification features powered by Trophy.
+    An example flashcard study platform with in-app gamification features powered by Trophy, the 1:1 customer engagement platform.
     <br />
-    <a href="https://docs.trophy.so/guides/tutorials/how-to-build-a-gamified-study-platform">
-        <strong>Tutorial »</strong>
+    <a href="https://docs.trophy.so/getting-started/quickstart">
+        <strong>Docs »</strong>
     </a>
     <a href="http://trophy.so?utm_source=github&utm_medium=example-apps&utm_campaign=example-study-app">
         <strong>Trophy »</strong>
@@ -40,11 +40,11 @@
 
 <br />
 
-This is an example flashcard study platform that demostrates how to build the following gamification features in an educational setting with Trophy:
+This is an example flashcard study platform that demonstrates how to build the following gamification features in an educational setting with Trophy:
 
-- Multi-stage achievements with badges
+- Multi-stage milestones with badges
 - Daily streaks
-- Automated gamified emails for achievement unlocked, and for weekly progress summaries
+- Automated emails for milestone unlocks and weekly progress summaries
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -55,7 +55,7 @@ This is an example flashcard study platform that demostrates how to build the fo
 - [Lucide](https://lucide.dev/icons) for iconography
 - [Motion](https://motion.dev/) for animations
 - [HTML5 Audio API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API) for sound effects
-- [Trophy](http://trophy.so?utm_source=github&utm_medium=example-apps&utm_campaign=example-study-app) for gamification
+- [Trophy](http://trophy.so?utm_source=github&utm_medium=example-apps&utm_campaign=example-study-app) for milestones, streaks and emails
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -77,7 +77,7 @@ npm run dev
 
 ### Prerequisites
 
-To use the gamification features, you'll need to create a Trophy account. Follow the [tutorial](https://docs.trophy.so/guides/tutorials/how-to-build-a-gamified-study-platform) to get started or [create an account](http://app.trophy.so/sign-up?utm_source=github&utm_medium=example-apps&utm_campaign=example-study-app).
+To use the gamification features, you'll need a Trophy account. See the [Trophy docs](https://docs.trophy.so/getting-started/quickstart) to get started, or [book a demo](https://trophy.so/contact-sales?utm_source=github&utm_medium=example-apps&utm_campaign=example-study-app) if you don't have an account yet.
 
 Find or create your API key here and add it to your environment variables as follows:
 
